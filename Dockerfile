@@ -99,7 +99,9 @@ RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.39.5/install.sh | b
   && nvm install $NODE_VERSION \
   && nvm alias default $NODE_VERSION \
   && nvm use default
-ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+ENV NODE_PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/"
+ENV PATH="${NODE_PATH}:${PATH}"
+
 
 # Set the locale
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
