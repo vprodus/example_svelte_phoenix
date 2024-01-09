@@ -21,20 +21,13 @@ ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 FROM ${BUILDER_IMAGE} as builder
 
 # install build dependencies
-RUN apt-get update -y && apt-get install -y build-essential git curl \
+RUN apt-get update -y && apt-get install -y build-essential git curl gpg \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
-# install nodejs for build stage
-# Install nvm with node and npm
-ENV NVM_DIR=/root/.nvm
-ENV NODE_VERSION 20.9.0
-
-RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.39.5/install.sh | bash \
-  && . $NVM_DIR/nvm.sh \
-  && nvm install $NODE_VERSION \
-  && nvm alias default $NODE_VERSION \
-  && nvm use default
-ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+RUN mkdir -p /etc/apt/keyrings; \
+  && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg; \
+  && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list; \
+  && apt-get update && apt-get install -y nodejs;
 
 # prepare build dir
 WORKDIR /app
@@ -87,20 +80,14 @@ RUN mix release
 FROM ${RUNNER_IMAGE}
 
 RUN apt-get update -y && \
-  apt-get install -y libstdc++6 openssl libncurses5 locales ca-certificates curl \
+  apt-get install -y libstdc++6 openssl libncurses5 locales ca-certificates curl gpg \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # install nodejs for production environment
-ENV NVM_DIR=/root/.nvm
-ENV NODE_VERSION 20.9.0
-
-RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.39.5/install.sh | bash \
-  && . $NVM_DIR/nvm.sh \
-  && nvm install $NODE_VERSION \
-  && nvm alias default $NODE_VERSION \
-  && nvm use default
-ENV NODE_PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/"
-ENV PATH="${NODE_PATH}:${PATH}"
+RUN mkdir -p /etc/apt/keyrings; \
+  && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg; \
+  && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list; \
+  && apt-get update && apt-get install -y nodejs;
 
 
 # Set the locale
