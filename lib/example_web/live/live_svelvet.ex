@@ -4,7 +4,7 @@ defmodule ExampleWeb.LiveSvelvet do
 
   def render(assigns) do
     ~H"""
-    <.SvelVet />
+    <.Svelte3 />
     """
   end
 

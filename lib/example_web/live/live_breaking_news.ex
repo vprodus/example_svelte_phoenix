@@ -19,7 +19,7 @@ defmodule ExampleWeb.LiveExample5 do
 
   def render(assigns) do
     ~H"""
-    <.BrakingNews news={@news} socket={@socket} />
+    <.BreakingNews news={@news} socket={@socket} />
     """
   end
 
