@@ -1,24 +1,41 @@
 <script>
-    export let number
-    let other = 1
+  import { fly } from "svelte/transition";
+
+  export let number = 1;
+  export let live;
+
+  function increase() {
+    live.pushEvent("set_number", { number: number + 1 });
+  }
+
+  function decrease() {
+    live.pushEvent("set_number", { number: number - 1 });
+  }
 </script>
 
-<svelte:head>
-    <title>Simple Counter</title>
-</svelte:head>
+<h1 class="text-lg mb-6">
+  Component is working, and the number should be animated
+</h1>
 
-<div class="flex flex-col justify-center items-center gap-4 p-4">
-    <div class="flex flex-row items-center justify-center gap-10">
-        <div class="flex flex-col justify-center items-center">
-            Server
-            <span class="text-xl">{number}</span>
-            <button class="plus" phx-click="increment">+1</button>
-        </div>
+<button
+  on:click={increase}
+  class="bg-black text-white px-4 py-2 rounded-lg font-bold">+</button
+>
+<button
+  on:click={decrease}
+  class="bg-black text-white px-4 py-2 rounded-lg font-bold">-</button
+>
 
-        <div class="flex flex-col justify-center items-center">
-            Client
-            <span class="text-xl">{other}</span>
-            <button class="plus" on:click={() => (other += 1)}>+1</button>
-        </div>
-    </div>
-</div>
+{#key number}
+  <p class="mt-1">
+    The number is:
+    <br />
+    <span
+      in:fly={{ y: -40 }}
+      class="absolute px-2 mt-2"
+      style="font-size: {number / 2}rem;"
+    >
+      {number}
+    </span>
+  </p>
+{/key}
