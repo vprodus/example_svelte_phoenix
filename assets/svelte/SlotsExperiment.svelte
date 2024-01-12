@@ -1,3 +1,3 @@
 <p>Before slot</p>
-<p><slot /></p>
+<slot />
 <p>After slot</p>

@@ -33,6 +33,8 @@ defmodule ExampleWeb.Router do
     live "/svelvet", LiveSvelvet
     live "/live-json", LiveJson
     live "/slots-experiment", LiveSlotsExperiment
+    live "/svelte-2", LiveSvelte2
+    live "/svelte-1", LiveSvelte1
   end
 
   # Other scopes may use custom stacks.
