@@ -7,6 +7,14 @@ import Config
 # before starting your production server.
 config :example, ExampleWeb.Endpoint, cache_static_manifest: "priv/static/cache_manifest.json"
 
+# Setting primary domains, needs to be done at compile time for router host matching
+# Feel free to change this for your app
+config :example,
+  primary_domains: [
+    System.get_env("PHX_HOST", "localhost"),
+    "www.#{System.get_env("PHX_HOST", "localhost")}"
+  ]
+
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: Example.Finch
 

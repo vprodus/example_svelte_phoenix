@@ -42,6 +42,12 @@ defmodule ExampleWeb.ShopLive.Index do
     shop = Shops.get_shop!(id)
     {:ok, _} = Shops.delete_shop(shop)
 
+    Task.start(fn ->
+      unless is_nil(shop.custom_domain) or String.trim(shop.custom_domain) == "" do
+        Example.Approximated.delete_vhost(shop.custom_domain)
+      end
+    end)
+
     {:noreply, stream_delete(socket, :shops, shop)}
   end
 end

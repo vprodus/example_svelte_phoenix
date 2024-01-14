@@ -54,7 +54,8 @@ defmodule Example.MixProject do
       {:live_svelte, "~> 0.12.0"},
       {:json_diff_ex, "~> 0.6.7", override: true},
       {:live_json, "~> 0.4.5"},
-      {:slugy, "~> 4.1.0"}
+      {:slugy, "~> 4.1.0"},
+      {:req, "~> 0.4.8"}
     ]
   end
 

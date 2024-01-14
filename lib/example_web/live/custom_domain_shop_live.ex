@@ -11,11 +11,26 @@ defmodule ExampleWeb.CustomDomainShopLive do
         <div class="text-sm mt-1 mb-2 text-gray-500">
           <%= "#{String.slice(product.description, 0..140)}..." %>
         </div>
-        <.link class="text-xs text-gray-500 hover:text-gray-800" href={~p"/#{product.slug}"}>
+        <.link class="text-xs text-gray-500 hover:text-gray-800" navigate={~p"/#{product.slug}"}>
           See product details
         </.link>
       </div>
     <% end %>
+
+    <div class="mt-8 pt-8 border-t">
+      <h3 class="text-lg">Shop Guestbook</h3>
+      <p class="text-xs text-gray-500 mb-4">
+        This is just here to show that liveview websockets work.<br />
+        Names will disappear on reload because we don't save them.
+      </p>
+      <form id="guest-form" phx-submit="sign guestbook" class="mb-4">
+        <input type="text" name="name" class="rounded" />
+        <.button>Sign Guestbook</.button>
+      </form>
+      <%= for guest <- @guests do %>
+        <div class="mt-4"><%= guest %></div>
+      <% end %>
+    </div>
     """
   end
 

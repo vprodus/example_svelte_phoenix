@@ -58,6 +58,28 @@ defmodule ExampleWeb.ShopLive.FormComponent do
       {:ok, shop} ->
         notify_parent({:saved, shop})
 
+        old_cd = socket.assigns.shop.custom_domain
+
+        # Update the Approximated.app virtual host for the custom domain, if there is one.
+        # We handle this in a task so that you don't need an account to run this example.
+        Task.start(fn ->
+          cond do
+            # If the blog custom domain was non-nil/empty and now it is nil or empty,
+            # delete the Approximated virtual host instead of updating it
+            (is_nil(shop.custom_domain) or String.trim(shop.custom_domain) == "") and
+                (!is_nil(old_cd) and String.trim(old_cd) != "") ->
+              Example.Approximated.delete_vhost(old_cd)
+
+            # If the new one is different from the old, update it
+            shop.custom_domain != old_cd ->
+              Example.Approximated.update_vhost(old_cd, shop.custom_domain)
+
+            # Otherwise do nothing (was blank before, is blank now)
+            true ->
+              nil
+          end
+        end)
+
         {:noreply,
          socket
          |> put_flash(:info, "Shop updated successfully")
@@ -72,6 +94,14 @@ defmodule ExampleWeb.ShopLive.FormComponent do
     case Shops.create_shop(socket.assigns.user_id, shop_params) do
       {:ok, shop} ->
         notify_parent({:saved, shop})
+
+        # Create an Approximated virtual host to route and secure the custom domain.
+        # We handle this in a task so that you don't need an account to run this example.
+        unless is_nil(shop.custom_domain) or String.trim(shop.custom_domain) == "" do
+          Task.start(fn ->
+            Example.Approximated.create_vhost(shop.custom_domain)
+          end)
+        end
 
         {:noreply,
          socket

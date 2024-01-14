@@ -15,6 +15,7 @@ defmodule ExampleWeb.ProductLive.Index do
       |> stream(:products, products)
       |> assign(:shop_id, shop_id)
       |> assign(:shop, shop)
+      |> assign(:guests, [])
     }
   end
 
@@ -59,5 +60,11 @@ defmodule ExampleWeb.ProductLive.Index do
     {:ok, _} = Products.delete_product(product)
 
     {:noreply, stream_delete(socket, :products, product)}
+  end
+
+  def handle_event("sign guestbook", %{"name" => name}, socket) do
+    {:noreply,
+     socket
+     |> assign(:guests, [name | socket.assigns.guests])}
   end
 end
