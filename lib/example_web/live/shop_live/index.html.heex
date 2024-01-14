@@ -1,0 +1,56 @@
+<.header>
+  Listing Shops
+  <:actions>
+    <%= if assigns[:current_user] do %>
+      <.link patch={~p"/shops/new"}>
+        <.button>New Shop</.button>
+      </.link>
+    <% end %>
+  </:actions>
+</.header>
+
+<%= if assigns[:current_user] do %>
+  <.table
+    id="shops"
+    rows={@streams.shops}
+    row_click={fn {_id, shop} -> JS.navigate(~p"/shops/#{shop}") end}
+  >
+    <:col :let={{_id, shop}} label="Name"><%= shop.name %></:col>
+    <:col :let={{_id, shop}} label="Custom domain"><%= shop.custom_domain %></:col>
+    <:action :let={{_id, shop}}>
+      <div class="sr-only">
+        <.link navigate={~p"/shops/#{shop}"}>Show</.link>
+      </div>
+      <.link patch={~p"/shops/#{shop}/edit"}>Edit</.link>
+    </:action>
+    <:action :let={{id, shop}}>
+      <.link
+        phx-click={JS.push("delete", value: %{id: shop.id}) |> hide("##{id}")}
+        data-confirm="Are you sure?"
+      >
+        Delete
+      </.link>
+    </:action>
+  </.table>
+<% else %>
+  <.table
+    id="shops"
+    rows={@streams.shops}
+    row_click={fn {_id, shop} -> JS.navigate(~p"/shops/#{shop}") end}
+  >
+    <:col :let={{_id, shop}} label="Name"><%= shop.name %></:col>
+    <:col :let={{_id, shop}} label="Custom domain"><%= shop.custom_domain %></:col>
+  </.table>
+<% end %>
+
+<.modal :if={@live_action in [:new, :edit]} id="shop-modal" show on_cancel={JS.patch(~p"/shops")}>
+  <.live_component
+    module={ExampleWeb.ShopLive.FormComponent}
+    id={@shop.id || :new}
+    title={@page_title}
+    action={@live_action}
+    shop={@shop}
+    user_id={@current_user.id}
+    patch={~p"/shops"}
+  />
+</.modal>

@@ -1,0 +1,39 @@
+<.header>
+  Product: <%= @product.title %>
+  <:actions>
+    <%= if assigns[:current_user] do %>
+      <.link
+        patch={~p"/shops/#{@shop_id}/products/#{@product}/show/edit"}
+        phx-click={JS.push_focus()}
+      >
+        <.button>Edit product</.button>
+      </.link>
+    <% end %>
+  </:actions>
+</.header>
+
+<div class="mt-4 text-gray-500">
+  <%= @product.description %>
+</div>
+
+<div class="mt-4 text-gray-500">
+  <%= @product.price %>
+</div>
+
+<.back navigate={~p"/shops/#{@shop_id}"}>Back to products</.back>
+
+<.modal
+  :if={@live_action == :edit}
+  id="product-modal"
+  show
+  on_cancel={JS.patch(~p"/shops/#{@shop_id}/products/#{@product}")}
+>
+  <.live_component
+    module={ExampleWeb.ProductLive.FormComponent}
+    id={@product.id}
+    title={@page_title}
+    action={@live_action}
+    product={@product}
+    patch={~p"/shops/#{@shop_id}/products/#{@product}"}
+  />
+</.modal>

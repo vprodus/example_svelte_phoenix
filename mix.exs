@@ -32,6 +32,7 @@ defmodule Example.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bcrypt_elixir, "~> 3.0"},
       {:phoenix, "~> 1.7.10"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
@@ -52,7 +53,8 @@ defmodule Example.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:live_svelte, "~> 0.12.0"},
       {:json_diff_ex, "~> 0.6.7", override: true},
-      {:live_json, "~> 0.4.5"}
+      {:live_json, "~> 0.4.5"},
+      {:slugy, "~> 4.1.0"}
     ]
   end
 
