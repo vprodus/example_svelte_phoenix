@@ -21,8 +21,8 @@ defmodule Example.Shops do
     Repo.all(Shop)
   end
 
-  def get_shop_by_custom_domain!(custom_domain),
-    do: Repo.get_by!(Shop, custom_domain: custom_domain)
+  def get_shop_by_custom_domain(custom_domain),
+    do: Repo.get_by(Shop, custom_domain: custom_domain)
 
   @doc """
   Gets a single shop.
