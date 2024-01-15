@@ -2,6 +2,7 @@ defmodule Example.SimpleCache do
   @moduledoc """
   A simple ETS based cache for expensive function calls.
   """
+
   def get(mod, fun, args, opts \\ []) do
     case lookup(mod, fun, args) do
       nil ->

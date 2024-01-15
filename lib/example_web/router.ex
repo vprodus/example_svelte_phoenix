@@ -23,12 +23,16 @@ defmodule ExampleWeb.Router do
     plug ExampleWeb.CustomDomainsPlug
   end
 
+  pipeline :custom_domains do
+    ExampleWeb.CustomDomainsPlug
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   ## Authentication routes
-  scope "/", ExampleWeb, host: Application.compile_env(:example, :primary_domains, ["localhost"]) do
+  scope "/", ExampleWeb, host: ["produs.com.tr", "www.produs.com.tr"] do
     scope "/" do
       pipe_through [:browser, :redirect_if_user_is_authenticated]
 
@@ -105,7 +109,13 @@ defmodule ExampleWeb.Router do
 
   # A catch-all scope for any other hosts (custom domains).
   scope "/", ExampleWeb do
-    pipe_through [:custom_domain_browser]
+    pipe_through [
+      # a duplicate of the :browser pipeline, minus the layout plug (set below)
+      :custom_domain_browser,
+      # a plug that checks for a header or a hostname other than the primary, and
+      # sets it in the session as the custom domain.
+      :custom_domains
+    ]
 
     live_session :custom_domain_shop, [
       # assigns the custom domain and shop struct to every liveview in this block
