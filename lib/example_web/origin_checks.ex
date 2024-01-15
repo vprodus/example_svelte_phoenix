@@ -42,6 +42,6 @@ defmodule ExampleWeb.OriginChecks do
   # so we can have a smaller cache memory footprint
   def origin_allowed_just_host?(host) when is_binary(host) do
     Enum.member?(Application.get_env(:example, :primary_domains), host) or
-      Repo.exists?(from b in Shop, where: b.custom_domain == ^host)
+      Repo.exists?(from s in Shop, where: s.custom_domain == ^host)
   end
 end

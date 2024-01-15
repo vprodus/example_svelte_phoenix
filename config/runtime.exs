@@ -1,9 +1,8 @@
 import Config
 
 if System.get_env("PHX_SERVER") do
-  config :example, ExampleWeb.Endpoint,
-    server: true,
-    check_origin: {ExampleWeb.OriginChecks, :cache_origin_allowed?, []}
+  config :example, ExampleWeb.Endpoint, server: true
+  # check_origin: {ExampleWeb.OriginChecks, :cache_origin_allowed?, []}
 end
 
 if config_env() == :prod do
