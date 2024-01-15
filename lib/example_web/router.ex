@@ -32,7 +32,7 @@ defmodule ExampleWeb.Router do
   end
 
   ## Authentication routes
-  scope "/", ExampleWeb, host: ["produs.com.tr", "www.produs.com.tr"] do
+  scope "/", ExampleWeb, host: Application.compile_env(:example, :primary_domains, ["localhost"]) do
     scope "/" do
       pipe_through [:browser, :redirect_if_user_is_authenticated]
 

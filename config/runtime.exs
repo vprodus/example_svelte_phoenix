@@ -1,8 +1,9 @@
 import Config
 
 if System.get_env("PHX_SERVER") do
-  config :example, ExampleWeb.Endpoint, server: true
-  # check_origin: {ExampleWeb.OriginChecks, :cache_origin_allowed?, []}
+  config :example, ExampleWeb.Endpoint,
+    server: true,
+    check_origin: {ExampleWeb.OriginChecks, :cache_origin_allowed?, []}
 end
 
 if config_env() == :prod do
@@ -39,7 +40,7 @@ if config_env() == :prod do
     adapter: Swoosh.Adapters.Mailgun,
     api_key: System.get_env("MAILGUN_API_KEY"),
     domain: System.get_env("PHX_HOST"),
-    base_url: "https://api.eu.mailgun.net/v3"
+    base_url: "https://api.eu.mailgun.net/v3/"
 
   # Configures Swoosh API Client
   config :swoosh, api_client: Swoosh.ApiClient.Hackney

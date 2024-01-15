@@ -9,10 +9,11 @@ config :example, ExampleWeb.Endpoint, cache_static_manifest: "priv/static/cache_
 
 # Setting primary domains, needs to be done at compile time for router host matching
 # Feel free to change this for your app
+
 config :example,
   primary_domains: [
-    System.get_env("PHX_HOST", "localhost"),
-    "www.#{System.get_env("PHX_HOST", "localhost")}"
+    "produs.com.tr",
+    "www.produs.com.tr"
   ]
 
 # Disable Swoosh Local Memory Storage
