@@ -55,7 +55,8 @@ defmodule Example.MixProject do
       {:json_diff_ex, "~> 0.6.7", override: true},
       {:live_json, "~> 0.4.5"},
       {:slugy, "~> 4.1.0"},
-      {:req, "~> 0.4.8"}
+      {:req, "~> 0.4.8"},
+      {:hackney, "~> 1.20"}
     ]
   end
 
