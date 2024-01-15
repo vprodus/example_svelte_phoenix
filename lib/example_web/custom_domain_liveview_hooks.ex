@@ -8,6 +8,9 @@ defmodule ExampleWeb.CustomDomainLiveviewHooks do
   alias Example.Shops.Shop
 
   def on_mount(:load_shop_for_custom_domain, _params, session, socket) do
+    IO.inspect("++++++++++")
+    IO.inspect(Map.get(session, "custom_domain"))
+
     shop =
       Example.SimpleCache.get(
         Shops,
@@ -16,6 +19,8 @@ defmodule ExampleWeb.CustomDomainLiveviewHooks do
         # 5 mins
         ttl: 300
       )
+
+    IO.inspect(shop)
 
     case shop do
       %Shop{} = shop ->
