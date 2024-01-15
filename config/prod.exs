@@ -15,9 +15,6 @@ config :example,
     "www.#{System.get_env("PHX_HOST", "localhost")}"
   ]
 
-# Configures Swoosh API Client
-config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: Example.Finch
-
 # Disable Swoosh Local Memory Storage
 config :swoosh, local: false
 

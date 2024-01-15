@@ -35,6 +35,15 @@ if config_env() == :prod do
   host = System.get_env("PHX_HOST")
   port = String.to_integer(System.get_env("PORT") || "4000")
 
+  config :example, Example.Mailer,
+    adapter: Swoosh.Adapters.Mailgun,
+    api_key: System.get_env("MAILGUN_API_KEY"),
+    domain: System.get_env("PHX_HOST"),
+    base_url: "https://api.eu.mailgun.net/v3"
+
+  # Configures Swoosh API Client
+  config :swoosh, api_client: Swoosh.ApiClient.Hackney
+
   config :example, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
   config :example, ExampleWeb.Endpoint,

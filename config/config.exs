@@ -29,7 +29,7 @@ config :example, ExampleWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :example, Example.Mailer, adapter: Swoosh.Adapters.Local
+# config :example, Example.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure tailwind (the version is required)
 config :tailwind,
