@@ -18,9 +18,6 @@ defmodule ExampleWeb.CustomDomainLiveviewHooks do
         ttl: 600
       )
 
-    IO.inspect(shop)
-    Phoenix.Component.assign(socket, :host, custom_domain)
-
     case shop do
       %Shop{} = shop ->
         {

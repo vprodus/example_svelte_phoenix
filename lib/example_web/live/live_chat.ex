@@ -5,10 +5,15 @@ defmodule ExampleWeb.LiveExample6 do
   @topic "public"
   @event_new_message "new_message"
 
+  def mount(_params, _session, socket) do
+    ExampleWeb.Endpoint.subscribe(@topic)
+    {:ok, assign(socket, messages: [], name: nil)}
+  end
+
   def render(assigns) do
     ~H"""
     <div class="flex justify-center items-center h-full w-full">
-      <form :if={!@name} phx-submit="set_name">
+      <form :if={!@name} phx-submit="set_name" phx-target={@myself}>
         <!-- svelte-ignore a11y-autofocus -->
         <input
           type="text"
@@ -29,11 +34,6 @@ defmodule ExampleWeb.LiveExample6 do
       />
     </div>
     """
-  end
-
-  def mount(_params, _session, socket) do
-    ExampleWeb.Endpoint.subscribe(@topic)
-    {:ok, assign(socket, messages: [], name: nil)}
   end
 
   def handle_event("set_name", %{"name" => ""}, socket), do: {:noreply, socket}
