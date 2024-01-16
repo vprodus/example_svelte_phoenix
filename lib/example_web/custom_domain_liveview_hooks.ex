@@ -8,19 +8,18 @@ defmodule ExampleWeb.CustomDomainLiveviewHooks do
   alias Example.Shops.Shop
 
   def on_mount(:load_shop_for_custom_domain, _params, session, socket) do
-    IO.inspect("++++++++++")
-    IO.inspect(Map.get(session, "custom_domain"))
+    custom_domain = Map.get(session, "custom_domain")
 
     shop =
       Example.SimpleCache.get(
         Shops,
         :get_shop_by_custom_domain,
-        [Map.get(session, "custom_domain")],
-        # 5 mins
-        ttl: 300
+        [custom_domain],
+        ttl: 600
       )
 
     IO.inspect(shop)
+    Phoenix.Component.assign_new(socket, :host, custom_domain)
 
     case shop do
       %Shop{} = shop ->
@@ -29,17 +28,13 @@ defmodule ExampleWeb.CustomDomainLiveviewHooks do
           assign(
             socket,
             %{
-              custom_domain: Map.get(session, "custom_domain"),
-              # for our use case, the shop struct is pretty lightweight
-              # so we assign the entire thing. In your use case, you might want to
-              # assign just the id and load/stream it as needed in the actual liveview.
+              custom_domain: custom_domain,
               shop: shop
             }
           )
         }
 
       _ ->
-        # This converts to a 404 in phoenix
         raise Ecto.NoResultsError
     end
   end

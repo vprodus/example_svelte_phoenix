@@ -1,4 +1,4 @@
-defmodule ExampleWeb.UpdateHostFromApxHeaderPlug do
+defmodule ExampleWeb.UpdateHostFromHeaderPlug do
   @moduledoc """
   This plug will *also* work if you don't use this the separate header approach, so no harm to have it.
   """
