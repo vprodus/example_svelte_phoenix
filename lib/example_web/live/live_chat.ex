@@ -5,6 +5,8 @@ defmodule ExampleWeb.LiveExample6 do
   @topic "public"
   @event_new_message "new_message"
 
+  on_mount({ExampleWeb.UserAuth, :mount_current_user})
+
   def mount(_session, _params, socket) do
     ExampleWeb.Endpoint.subscribe(@topic)
 
