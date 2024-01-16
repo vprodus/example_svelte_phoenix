@@ -19,7 +19,7 @@ defmodule ExampleWeb.CustomDomainLiveviewHooks do
       )
 
     IO.inspect(shop)
-    Phoenix.Component.assign_new(socket, :host, custom_domain)
+    Phoenix.Component.assign(socket, :host, custom_domain)
 
     case shop do
       %Shop{} = shop ->
