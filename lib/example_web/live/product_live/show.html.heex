@@ -20,6 +20,8 @@
   <%= @product.price %>
 </div>
 
+<%= live_render(@socket, ExampleWeb.LiveExample6, id: "chat") %>
+
 <.back navigate={~p"/shops/#{@shop_id}"}>Back to products</.back>
 
 <.modal
