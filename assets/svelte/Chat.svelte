@@ -21,7 +21,7 @@
 
   function submitMessage() {
     if (body === "") return;
-    live.pushEventTo("chat", "send_message", { body });
+    live.pushEventTo("Chat", "send_message", { body });
     body = "";
   }
 </script>
