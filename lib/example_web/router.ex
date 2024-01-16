@@ -20,7 +20,6 @@ defmodule ExampleWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
-    plug ExampleWeb.CustomDomainsPlug
   end
 
   pipeline :custom_domains do
