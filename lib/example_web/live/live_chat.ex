@@ -5,7 +5,7 @@ defmodule ExampleWeb.LiveExample6 do
   @topic "public"
   @event_new_message "new_message"
 
-  def mount(socket) do
+  def mount(_session, _params, socket) do
     ExampleWeb.Endpoint.subscribe(@topic)
     {:ok, assign(socket, messages: [], name: nil)}
   end
