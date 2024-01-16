@@ -10,7 +10,7 @@ defmodule ExampleWeb.LiveExample6 do
   def mount(_session, _params, socket) do
     ExampleWeb.Endpoint.subscribe(@topic)
 
-    name = if socket.assigns.current_user, do: socket.assigns.current_user, else: nil
+    name = if socket.assigns.current_user, do: socket.assigns.current_user.email, else: nil
 
     socket =
       socket
