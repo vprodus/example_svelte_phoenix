@@ -7,6 +7,8 @@ defmodule ExampleWeb.CustomDomainProductLive do
     <div class=""><%= @product.title %></div>
     <div class="text-sm mt-1 mb-2 text-gray-500"><%= @product.description %></div>
     <div class="text-sm mt-1 mb-2 text-gray-500"><%= @product.price %></div>
+
+    <.live_component module={ExampleWeb.LiveExample6} id={:chat} />
     """
   end
 

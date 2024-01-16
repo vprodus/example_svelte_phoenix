@@ -1,5 +1,5 @@
 defmodule ExampleWeb.LiveExample6 do
-  use ExampleWeb, :live_view
+  use ExampleWeb, :live_component
   use LiveSvelte.Components
 
   @topic "public"

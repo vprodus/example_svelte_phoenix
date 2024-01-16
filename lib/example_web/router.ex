@@ -58,7 +58,7 @@ defmodule ExampleWeb.Router do
       live "/plus-minus-hybrid", LiveExample3
       live "/log-list", LiveExample4
       live "/breaking-news", LiveExample5
-      live "/chat", LiveExample6
+      # live "/chat", LiveExample6
       live "/lights", LiveLights
       live "/struct", LiveStruct
       live "/sigil", LiveSigil
