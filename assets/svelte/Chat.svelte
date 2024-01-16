@@ -21,7 +21,7 @@
 
   function submitMessage() {
     if (body === "") return;
-    live.pushEventTo("send_message", { body });
+    live.pushEvent("send_message", { body });
     body = "";
   }
 </script>
