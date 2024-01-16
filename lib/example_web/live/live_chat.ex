@@ -7,20 +7,28 @@ defmodule ExampleWeb.LiveExample6 do
 
   def mount(_session, _params, socket) do
     ExampleWeb.Endpoint.subscribe(@topic)
-    {:ok, assign(socket, messages: [], name: nil)}
+
+    name = if socket.assigns.current_user, do: socket.assigns.current_user, else: nil
+
+    socket =
+      socket
+      |> assign(:messages, [])
+      |> assign(:name, name)
+
+    {:ok, socket}
   end
 
   def render(assigns) do
     ~H"""
     <.Chat
-      :if={@current_user || @name}
+      :if={@name}
       messages={@messages}
-      name={@current_user || @name}
+      name={@name}
       class="w-full h-full flex justify-center items-center"
       socket={@socket}
     />
 
-    <div :if={!@current_user && !@name} class="flex justify-center items-center h-full w-full">
+    <div :if={!@name} class="flex justify-center items-center h-full w-full">
       <form :if={!@name} phx-submit="set_name">
         <!-- svelte-ignore a11y-autofocus -->
         <input
