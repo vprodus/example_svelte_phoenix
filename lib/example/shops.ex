@@ -21,6 +21,8 @@ defmodule Example.Shops do
     Repo.all(Shop)
   end
 
+  def get_shop_by_custom_domain(nil), do: nil
+
   def get_shop_by_custom_domain(custom_domain),
     do: Repo.get_by(Shop, custom_domain: custom_domain)
 
@@ -38,6 +40,7 @@ defmodule Example.Shops do
       ** (Ecto.NoResultsError)
 
   """
+
   def get_shop!(id), do: Repo.get!(Shop, id)
 
   @doc """
