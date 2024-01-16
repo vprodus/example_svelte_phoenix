@@ -15,6 +15,7 @@ defmodule ExampleWeb.UpdateHostFromHeaderPlug do
       end)
 
     IO.inspect("received the incoming_host: #{incoming_host}")
+    IO.inspect("received the host: #{conn.host}")
 
     case incoming_host do
       false ->

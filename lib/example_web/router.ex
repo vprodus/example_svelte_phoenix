@@ -23,7 +23,7 @@ defmodule ExampleWeb.Router do
   end
 
   pipeline :custom_domains do
-    ExampleWeb.CustomDomainsPlug
+    plug ExampleWeb.CustomDomainsPlug
   end
 
   pipeline :api do
@@ -109,18 +109,13 @@ defmodule ExampleWeb.Router do
   # A catch-all scope for any other hosts (custom domains).
   scope "/", ExampleWeb do
     pipe_through [
-      # a duplicate of the :browser pipeline, minus the layout plug (set below)
       :custom_domain_browser,
-      # a plug that checks for a header or a hostname other than the primary, and
-      # sets it in the session as the custom domain.
       :custom_domains
     ]
 
-    live_session :custom_domain_shop, [
-      # assigns the custom domain and shop struct to every liveview in this block
+    live_session :custom_domain_shop,
       on_mount: [{ExampleWeb.CustomDomainLiveviewHooks, :load_shop_for_custom_domain}],
-      layout: {ExampleWeb.CustomDomainLayouts, :root}
-    ] do
+      layout: {ExampleWeb.CustomDomainLayouts, :root} do
       live "/", CustomDomainShopLive, :index
       live "/:product_slug", CustomDomainProductLive, :index
     end
