@@ -39,6 +39,13 @@ defmodule ExampleWeb.CustomDomainShopLive do
 
     {:ok,
      socket
-     |> stream(:products, products)}
+     |> stream(:products, products)
+     |> assign(:guests, [])}
+  end
+
+  def handle_event("sign guestbook", %{"name" => name}, socket) do
+    {:noreply,
+     socket
+     |> assign(:guests, [name | socket.assigns.guests])}
   end
 end
