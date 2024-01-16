@@ -31,7 +31,7 @@ defmodule ExampleWeb.LiveExample6 do
     """
   end
 
-  def mount(_params, _session, socket) do
+  def update(_params, _session, socket) do
     ExampleWeb.Endpoint.subscribe(@topic)
     {:ok, assign(socket, messages: [], name: nil)}
   end
