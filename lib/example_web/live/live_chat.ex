@@ -1,5 +1,5 @@
 defmodule ExampleWeb.LiveExample6 do
-  use ExampleWeb, :live_component
+  use ExampleWeb, :live_view
   use LiveSvelte.Components
 
   @topic "public"
@@ -13,7 +13,7 @@ defmodule ExampleWeb.LiveExample6 do
   def render(assigns) do
     ~H"""
     <div class="flex justify-center items-center h-full w-full">
-      <form :if={!@name} phx-submit="set_name" phx-target={@myself}>
+      <form :if={!@name} phx-submit="set_name">
         <!-- svelte-ignore a11y-autofocus -->
         <input
           type="text"
