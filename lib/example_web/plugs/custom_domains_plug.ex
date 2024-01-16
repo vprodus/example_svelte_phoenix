@@ -7,6 +7,7 @@ defmodule ExampleWeb.CustomDomainsPlug do
 
   @impl true
   def call(conn, _opts) do
+    IO.inspect("******** put session #{conn.host} ###########")
     put_session(conn, :custom_domain, conn.host)
   end
 end
